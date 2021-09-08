@@ -3,46 +3,145 @@ const fs = require('fs');
 class Archivo {
 
     constructor() {
-        
+
         this.urlLocal = "./models/";
     };
 
-    download = async( archivo , data ) => {
+    readForId = async (archivo, id) => {
 
-        const currentUrl = `${this.urlLocal}${archivo}.txt`;
+        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
+        const currentUrl = `./models/productos.txt`;
+
+        const readLocalFile = await fs.promises.readFile(currentUrl);
+        const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
+
+        if (id) {
+
+            return jsonFile.map(e => { if (e.id === id) { return e } })
+
+        } else return jsonFile
+
+    };
+
+    download = async (archivo, data) => {
+
+        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
+        const currentUrl = `./models/productos.txt`;
 
         try {
-            
+
             const readLocalFile = await fs.promises.readFile(currentUrl);
             const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
 
-            jsonFile.push( { ...data, id: `${Date.now()}${jsonFile.length}` } );
-        
+            jsonFile.push({ ...data, id: `${Date.now()}${jsonFile.length}` });
+
             try {
-                
-                await fs.promises.writeFile( currentUrl, JSON.stringify( jsonFile, null, '\t' ) );
+
+                await fs.promises.writeFile(currentUrl, JSON.stringify(jsonFile, null, '\t'));
+
+                return jsonFile;
 
             } catch (error) {
-                
+
+                throw new Error(error)
+
+                return ({})
+            }
+
+        } catch (error) {
+
+            try {
+
+                await fs.promises.writeFile(currentUrl, JSON.stringify([{ ...data, id: `${Date.now()}0` }]));
+
+                return ({ ...data, id: `${Date.now()}0` })
+
+            } catch (error) {
+
                 throw new Error(error)
 
             }
 
-        } catch (error) {
-            
-            try {
-                
-                await fs.promises.writeFile( currentUrl, JSON.stringify( [ { ...data, id: `${Date.now()}0` } ] ) );
-
-            } catch (error) {
-                
-                throw new Error(error)
-
-            }  
-
         }
 
-    }
+    };
+
+    update = async (archivo, data, id) => {
+
+        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
+        const currentUrl = `./models/productos.txt`;
+
+        const readLocalFile = await fs.promises.readFile(currentUrl);
+        const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
+
+        let currentIndex = jsonFile.findIndex(data => data.id == id)
+
+        if (currentIndex > -1) {
+
+            jsonFile.map((elements, indx) => {
+
+                if (indx === currentIndex) {
+
+                    for (let element in elements) {
+
+                        elements[element] = data[element] || elements[element]
+
+                    }
+
+                } else { return elements }
+
+            });
+
+            try {
+
+                await fs.promises.writeFile(currentUrl, JSON.stringify(jsonFile, null, '\t'));
+
+                return jsonFile;
+
+            } catch (error) {
+
+                throw new Error(error)
+
+            }
+
+        } else return {}
+
+    };
+
+    delete = async (archivo, data, id) => {
+
+        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
+        const currentUrl = `./models/productos.txt`;
+
+        const readLocalFile = await fs.promises.readFile(currentUrl);
+        const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
+
+        let currentIndex = jsonFile.findIndex(data => data.id == id)
+
+        if (currentIndex > -1) {
+
+            jsonFile.map((elements, indx) => {
+
+                if (indx !== currentIndex) { 
+                    return elements 
+                }
+            });
+
+            try {
+
+                await fs.promises.writeFile(currentUrl, JSON.stringify(jsonFile, null, '\t'));
+
+                return jsonFile;
+
+            } catch (error) {
+
+                throw new Error(error)
+
+            }
+
+        } else return {}
+
+    };    
 
 };
 

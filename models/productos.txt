@@ -1,0 +1,20 @@
+[
+	{
+		"nombre": "Producto Modicado",
+		"descripcion": "producto de prueba postman",
+		"codigo": "AN123FFS",
+		"foto": "OTRA URL",
+		"precio": 130,
+		"stock": 898989,
+		"id": "16310640514020"
+	},
+	{
+		"nombre": "Producto",
+		"descripcion": "producto de prueba postman",
+		"codigo": "AN123FFS",
+		"foto": "OTRA URL",
+		"precio": 130,
+		"stock": 10,
+		"id": "16310640704021"
+	}
+]
