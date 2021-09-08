@@ -1,20 +1,20 @@
 [
 	{
-		"nombre": "Producto Modicado",
-		"descripcion": "producto de prueba postman",
-		"codigo": "AN123FFS",
-		"foto": "OTRA URL",
-		"precio": 130,
-		"stock": 898989,
-		"id": "16310640514020"
+		"nombre": "Producto 2",
+		"descripcion": "producto de prueba postman 2",
+		"codigo": "AN1TT3S",
+		"foto": "NUEVA URL",
+		"precio": 170,
+		"stock": 101,
+		"id": "16311171505921"
 	},
 	{
-		"nombre": "Producto",
-		"descripcion": "producto de prueba postman",
-		"codigo": "AN123FFS",
-		"foto": "OTRA URL",
-		"precio": 130,
-		"stock": 10,
-		"id": "16310640704021"
+		"nombre": "Producto 3",
+		"descripcion": "producto de prueba postman 3",
+		"codigo": "AN11G3S",
+		"foto": "URL",
+		"precio": 70,
+		"stock": 81,
+		"id": "16311189636481"
 	}
 ]

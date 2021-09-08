@@ -10,14 +10,14 @@ class Archivo {
     readForId = async (archivo, id) => {
 
         // const currentUrl = `${this.urlLocal}${archivo}.txt`;
-        const currentUrl = `./models/productos.txt`;
+        const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
         const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
 
         if (id) {
 
-            return jsonFile.map(e => { if (e.id === id) { return e } })
+            return jsonFile.filter(data => data.id === id)
 
         } else return jsonFile
 
@@ -26,7 +26,7 @@ class Archivo {
     download = async (archivo, data) => {
 
         // const currentUrl = `${this.urlLocal}${archivo}.txt`;
-        const currentUrl = `./models/productos.txt`;
+        const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         try {
 
@@ -45,7 +45,6 @@ class Archivo {
 
                 throw new Error(error)
 
-                return ({})
             }
 
         } catch (error) {
@@ -69,7 +68,7 @@ class Archivo {
     update = async (archivo, data, id) => {
 
         // const currentUrl = `${this.urlLocal}${archivo}.txt`;
-        const currentUrl = `./models/productos.txt`;
+        const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
         const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
@@ -108,40 +107,35 @@ class Archivo {
 
     };
 
-    delete = async (archivo, data, id) => {
+    delete = async (archivo, id) => {
 
         // const currentUrl = `${this.urlLocal}${archivo}.txt`;
-        const currentUrl = `./models/productos.txt`;
+        const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
         const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
+  
+        // const currentJsonFile = jsonFile.filter(data => data.id !== id)
 
-        let currentIndex = jsonFile.findIndex(data => data.id == id)
+        var currentJsonFile = []
 
-        if (currentIndex > -1) {
+        for (let element of jsonFile) {
+            currentJsonFile.push(element)
+        }
+        console.log(currentJsonFile)
+        try {
 
-            jsonFile.map((elements, indx) => {
+            await fs.promises.writeFile(currentUrl, JSON.stringify(currentJsonFile, null, '\t'));
 
-                if (indx !== currentIndex) { 
-                    return elements 
-                }
-            });
+            return currentJsonFile;
 
-            try {
+        } catch (error) {
 
-                await fs.promises.writeFile(currentUrl, JSON.stringify(jsonFile, null, '\t'));
+            throw new Error(error)
 
-                return jsonFile;
+        }
 
-            } catch (error) {
-
-                throw new Error(error)
-
-            }
-
-        } else return {}
-
-    };    
+    };
 
 };
 

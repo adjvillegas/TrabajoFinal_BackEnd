@@ -22,7 +22,7 @@ routerProduct.get('/listar/:id?', (req, res) => {
 
 routerProduct.post('/agregar', (req, res) => {
 
-    const save = async(odata) => {
+    const fileSave = async(odata) => {
 
         const respose = await file.download('productos', odata);
 
@@ -30,7 +30,7 @@ routerProduct.post('/agregar', (req, res) => {
 
     };
 
-    save({nombre: req.body.nombre,
+    fileSave({nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         codigo: req.body.codigo,
         foto: req.body.foto,
@@ -41,7 +41,7 @@ routerProduct.post('/agregar', (req, res) => {
 
 routerProduct.put('/actualizar/:id', (req, res) => {
 
-    const update = async(id, odata) => {
+    const fileUpdate = async(id, odata) => {
 
         const respose = await file.update('productos', odata, id);
 
@@ -49,7 +49,7 @@ routerProduct.put('/actualizar/:id', (req, res) => {
 
     };
 
-    update( req.params.id,
+    fileUpdate( req.params.id,
         {    
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
@@ -63,6 +63,16 @@ routerProduct.put('/actualizar/:id', (req, res) => {
 });
 
 routerProduct.delete('/borrar/:id', (req, res) => {
+
+    const fileDelete = async(id) => {
+
+        const respose = await file.delete('productos', id);
+
+        res.json(respose)
+
+    };
+
+    fileDelete( req.params.id )        
 
 });
 
