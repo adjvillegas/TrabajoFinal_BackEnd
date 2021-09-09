@@ -9,7 +9,6 @@ class Archivo {
 
     readForId = async (archivo, id) => {
 
-        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
         const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
@@ -25,7 +24,6 @@ class Archivo {
 
     download = async (archivo, data) => {
 
-        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
         const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         try {
@@ -67,7 +65,6 @@ class Archivo {
 
     update = async (archivo, data, id) => {
 
-        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
         const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
@@ -109,20 +106,13 @@ class Archivo {
 
     delete = async (archivo, id) => {
 
-        // const currentUrl = `${this.urlLocal}${archivo}.txt`;
         const currentUrl = `${this.urlLocal}${archivo}.txt`;
 
         const readLocalFile = await fs.promises.readFile(currentUrl);
         const jsonFile = JSON.parse(readLocalFile.toString('utf-8'));
   
-        // const currentJsonFile = jsonFile.filter(data => data.id !== id)
+        const currentJsonFile = jsonFile.filter(data => data.id !== id)
 
-        var currentJsonFile = []
-
-        for (let element of jsonFile) {
-            currentJsonFile.push(element)
-        }
-        console.log(currentJsonFile)
         try {
 
             await fs.promises.writeFile(currentUrl, JSON.stringify(currentJsonFile, null, '\t'));
